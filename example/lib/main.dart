@@ -33,8 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     //create a CardController
-    SwipeableCardSectionController _cardController =
-        SwipeableCardSectionController();
+    SwipeableCardSectionController _cardController = SwipeableCardSectionController();
 
     return Scaffold(
       appBar: AppBar(
@@ -48,29 +47,33 @@ class _MyHomePageState extends State<MyHomePage> {
             context: context,
             //add the first 3 cards
             items: [
-              CardView(text: "First card"),
-              CardView(text: "Second card"),
-              CardView(text: "Third card"),
+              CardView(text: "1. card"),
+              CardView(text: "2. card"),
+              CardView(text: "3. card"),
+              CardView(text: "4. card"),
+              CardView(text: "5. card"),
             ],
             onCardSwiped: (dir, index, widget) {
               //Add the next card
-              if (counter <= 20) {
-                _cardController.addItem(CardView(text: "Card $counter"));
-                counter++;
-              }
+              // if (counter <= 20) {
+              //   _cardController.addItem(CardView(text: "Card $counter"));
+              //   counter++;
+              // }
 
-              if (dir == Direction.left) {
-                print('onDisliked ${(widget as CardView).text} $index');
-              } else if (dir == Direction.right) {
-                print('onLiked ${(widget as CardView).text} $index');
-              } else if (dir == Direction.up) {
-                print('onUp ${(widget as CardView).text} $index');
-              } else if (dir == Direction.down) {
-                print('onDown ${(widget as CardView).text} $index');
-              }
+              // if (dir == Direction.left) {
+              //   print('onDisliked ${(widget as CardView).text} $index');
+              // } else if (dir == Direction.right) {
+              //   print('onLiked ${(widget as CardView).text} $index');
+              // } else if (dir == Direction.up) {
+              //   print('onUp ${(widget as CardView).text} $index');
+              // } else if (dir == Direction.down) {
+              //   print('onDown ${(widget as CardView).text} $index');
+              // }
             },
             enableSwipeUp: true,
             enableSwipeDown: true,
+            enableSwipeLeft: false,
+            enableSwipeRight: false,
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 20.0),
