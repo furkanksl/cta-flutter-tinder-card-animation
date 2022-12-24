@@ -161,12 +161,14 @@ class _CardsSectionState extends State<SwipeableCardsSection> with SingleTickerP
                       // While dragging the first card
                       onPanUpdate: (DragUpdateDetails details) {
                         // Add what the user swiped in the last frame to the alignment of the card
+                        // print(details.delta.dy);
+
                         setState(() {
                           frontCardAlign = Alignment(
                             widget.enableSwipeRight || widget.enableSwipeLeft
                                 ? frontCardAlign.x + 10 * details.delta.dx / MediaQuery.of(context).size.width
                                 : 0,
-                            frontCardAlign.y + 10 * details.delta.dy / MediaQuery.of(context).size.height,
+                            frontCardAlign.y + 50 * details.delta.dy / MediaQuery.of(context).size.height,
                           );
 
                           frontCardRot = frontCardAlign.x; // * rotation speed;
