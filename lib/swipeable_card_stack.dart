@@ -151,92 +151,89 @@ class _CardsSectionState extends State<SwipeableCardsSection> with SingleTickerP
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        color: Colors.red,
-        child: IgnorePointer(
-          ignoring: !enableSwipe,
-          child: Stack(
-            children: <Widget>[
-              index < cards.length - 1
-                  ? Positioned.fill(
-                      top: widget.topPosition,
-                      child: middleCard(index + 1),
-                    )
-                  : Container(),
+      child: IgnorePointer(
+        ignoring: !enableSwipe,
+        child: Stack(
+          children: <Widget>[
+            index < cards.length - 1
+                ? Positioned.fill(
+                    top: widget.topPosition,
+                    child: middleCard(index + 1),
+                  )
+                : Container(),
 
-              Positioned.fill(
-                top: widget.topPosition,
-                child: currentCard(index),
-              ),
-              // Prevent swiping if the cards are animating
-              ((_controller.status != AnimationStatus.forward))
-                  ? Positioned.fill(
-                      // height: MediaQuery.of(context).size.height,
-                      // width: MediaQuery.of(context).size.width,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        // While dragging the first card
-                        onPanUpdate: (DragUpdateDetails details) {
-                          // Add what the user swiped in the last frame to the alignment of the card
-                          print(details.delta.dy);
+            Positioned.fill(
+              top: widget.topPosition,
+              child: currentCard(index),
+            ),
+            // Prevent swiping if the cards are animating
+            ((_controller.status != AnimationStatus.forward))
+                ? Positioned.fill(
+                    // height: MediaQuery.of(context).size.height,
+                    // width: MediaQuery.of(context).size.width,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      // While dragging the first card
+                      onPanUpdate: (DragUpdateDetails details) {
+                        // Add what the user swiped in the last frame to the alignment of the card
+                        print(details.delta.dy);
+                        setState(() {
+                          frontCardAlign = Alignment(
+                            widget.enableSwipeRight || widget.enableSwipeLeft
+                                ? frontCardAlign.x + 10 * details.delta.dx / MediaQuery.of(context).size.width
+                                : 0,
+                            frontCardAlign.y + 10 * details.delta.dy / MediaQuery.of(context).size.height,
+                          );
+
+                          frontCardRot = frontCardAlign.x; // * rotation speed;
+                        });
+                      },
+                      // When releasing the first card
+                      onPanEnd: (_) {
+                        // If the front card was swiped far enough to count as swiped
+                        final onCardSwiped = widget.onCardSwiped ?? (_, __, ___) => true;
+                        bool? shouldAnimate = false;
+                        if (frontCardAlign.x > 3.0 && widget.enableSwipeRight) {
+                          shouldAnimate = onCardSwiped(
+                            Direction.right,
+                            index,
+                            cards[0],
+                          );
+                        } else if (frontCardAlign.x < -3.0 && widget.enableSwipeLeft) {
+                          shouldAnimate = onCardSwiped(
+                            Direction.left,
+                            index,
+                            cards[0],
+                          );
+                        } else if (frontCardAlign.y < -3.0 && widget.enableSwipeUp) {
+                          shouldAnimate = onCardSwiped(
+                            Direction.up,
+                            index,
+                            cards[0],
+                          );
+                        } else if (frontCardAlign.y > 3.0 && widget.enableSwipeDown) {
+                          shouldAnimate = onCardSwiped(
+                            Direction.down,
+                            index,
+                            cards[0],
+                          );
+                        } else {
                           setState(() {
-                            frontCardAlign = Alignment(
-                              widget.enableSwipeRight || widget.enableSwipeLeft
-                                  ? frontCardAlign.x + 10 * details.delta.dx / MediaQuery.of(context).size.width
-                                  : 0,
-                              frontCardAlign.y + 10 * details.delta.dy / MediaQuery.of(context).size.height,
-                            );
-
-                            frontCardRot = frontCardAlign.x; // * rotation speed;
+                            frontCardAlign = defaultFrontCardAlign;
+                            frontCardRot = 0.0;
                           });
-                        },
-                        // When releasing the first card
-                        onPanEnd: (_) {
-                          // If the front card was swiped far enough to count as swiped
-                          final onCardSwiped = widget.onCardSwiped ?? (_, __, ___) => true;
-                          bool? shouldAnimate = false;
-                          if (frontCardAlign.x > 3.0 && widget.enableSwipeRight) {
-                            shouldAnimate = onCardSwiped(
-                              Direction.right,
-                              index,
-                              cards[0],
-                            );
-                          } else if (frontCardAlign.x < -3.0 && widget.enableSwipeLeft) {
-                            shouldAnimate = onCardSwiped(
-                              Direction.left,
-                              index,
-                              cards[0],
-                            );
-                          } else if (frontCardAlign.y < -3.0 && widget.enableSwipeUp) {
-                            shouldAnimate = onCardSwiped(
-                              Direction.up,
-                              index,
-                              cards[0],
-                            );
-                          } else if (frontCardAlign.y > 3.0 && widget.enableSwipeDown) {
-                            shouldAnimate = onCardSwiped(
-                              Direction.down,
-                              index,
-                              cards[0],
-                            );
-                          } else {
-                            setState(() {
-                              frontCardAlign = defaultFrontCardAlign;
-                              frontCardRot = 0.0;
-                            });
-                          }
+                        }
 
-                          shouldAnimate ??= true;
+                        shouldAnimate ??= true;
 
-                          if (shouldAnimate) {
-                            animateCards();
-                          }
-                        },
-                      ),
-                    )
-                  : Container(),
-            ],
-          ),
+                        if (shouldAnimate) {
+                          animateCards();
+                        }
+                      },
+                    ),
+                  )
+                : Container(),
+          ],
         ),
       ),
     );
