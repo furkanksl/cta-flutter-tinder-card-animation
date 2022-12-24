@@ -38,9 +38,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: Colors.transparent,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SwipeableCardsSection(
             cardController: _cardController,
@@ -53,25 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
               CardView(text: "4. card"),
               CardView(text: "5. card"),
             ],
-            onCardSwiped: (dir, index, widget) {
-              //Add the next card
-              // if (counter <= 20) {
-              //   _cardController.addItem(CardView(text: "Card $counter"));
-              //   counter++;
-              // }
-
-              // if (dir == Direction.left) {
-              //   print('onDisliked ${(widget as CardView).text} $index');
-              // } else if (dir == Direction.right) {
-              //   print('onLiked ${(widget as CardView).text} $index');
-              // } else if (dir == Direction.up) {
-              //   print('onUp ${(widget as CardView).text} $index');
-              // } else if (dir == Direction.down) {
-              //   print('onDown ${(widget as CardView).text} $index');
-              // }
-            },
-            enableSwipeUp: true,
-            enableSwipeDown: true,
+            onCardSwiped: (dir, index, widget) {},
             enableSwipeLeft: false,
             enableSwipeRight: false,
           ),
