@@ -54,7 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
               CardView(text: "4. card"),
               CardView(text: "5. card"),
             ],
-            onCardSwiped: (dir, index, widget) {},
+            onCardSwiped: (dir, index, widget) {
+              // _cardController.deleteItem(index);
+            },
             enableSwipeLeft: false,
             enableSwipeRight: false,
           ),
@@ -63,10 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FloatingActionButton(
-                  child: Icon(Icons.delete),
-                  onPressed: () => _cardController.deleteItem(0),
-                ),
+                // FloatingActionButton(
+                //   child: Icon(Icons.delete),
+                //   // onPressed: () => _cardController.deleteItem(1),
+                // ),
                 FloatingActionButton(
                   child: Icon(Icons.chevron_left),
                   onPressed: () => _cardController.triggerSwipeLeft(),

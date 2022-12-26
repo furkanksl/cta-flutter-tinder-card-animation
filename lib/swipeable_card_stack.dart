@@ -162,11 +162,13 @@ class _CardsSectionState extends State<SwipeableCardsSection> with SingleTickerP
         ignoring: !enableSwipe,
         child: Stack(
           children: <Widget>[
-            index < cards.length - 1
-                ? Positioned.fill(
-                    top: widget.topPosition,
-                    child: middleCard(index + 1),
-                  )
+            index + 1 < cards.length
+                ? (index < cards.length - 1
+                    ? Positioned.fill(
+                        top: widget.topPosition,
+                        child: middleCard(index + 1),
+                      )
+                    : Container())
                 : Container(),
 
             Positioned.fill(
