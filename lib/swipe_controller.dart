@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 typedef TriggerListener = void Function(Direction dir);
 typedef AppendItem = void Function(Widget item);
 typedef EnableSwipe = void Function(bool dir);
+typedef DeleteItem = void Function(int index);
 
 class SwipeableCardSectionController {
   late TriggerListener listener;
   late AppendItem addItem;
   late EnableSwipe enableSwipeListener;
+  late DeleteItem deleteItem;
 
   void triggerSwipeLeft() {
     return listener.call(Direction.left);
@@ -31,6 +33,10 @@ class SwipeableCardSectionController {
 
   void enableSwipe(bool isSwipeEnabled) {
     return enableSwipeListener.call(isSwipeEnabled);
+  }
+
+  void removeItem(int index) {
+    return deleteItem.call(index);
   }
 }
 
