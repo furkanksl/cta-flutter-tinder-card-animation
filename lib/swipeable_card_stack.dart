@@ -112,6 +112,12 @@ class _CardsSectionState extends State<SwipeableCardsSection> with SingleTickerP
     appendCard = newCard;
   }
 
+  void _deleteItem(int index) {
+    setState(() {
+      cards.removeAt(index);
+    });
+  }
+
   void _enableSwipe(bool isSwipeEnabled) {
     setState(() {
       this.enableSwipe = isSwipeEnabled;
@@ -127,6 +133,7 @@ class _CardsSectionState extends State<SwipeableCardsSection> with SingleTickerP
       cardController.listener = _triggerSwipe;
       cardController.addItem = _appendItem;
       cardController.enableSwipeListener = _enableSwipe;
+      cardController.deleteItem = _deleteItem;
     }
 
     // Init cards

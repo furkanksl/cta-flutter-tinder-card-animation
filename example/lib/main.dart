@@ -64,6 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
+                  child: Icon(Icons.delete),
+                  onPressed: () => _cardController.deleteItem(0),
+                ),
+                FloatingActionButton(
                   child: Icon(Icons.chevron_left),
                   onPressed: () => _cardController.triggerSwipeLeft(),
                 ),
